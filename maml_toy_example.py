@@ -45,7 +45,6 @@ def functional_forward(x, weights):
 # ==========================================
 # 3. EVALUATION FUNCTION (Shared)
 # ==========================================
-# THE FIX: Added adapt_steps parameter
 def evaluate_model(weights, P, snr_db=15, payload_size=10000, lr=0.1, adapt_steps=1):
     y_pilots, labels_pilots, device_h = generate_device_data(P, snr_db=snr_db, is_pilot=True)
     adapted_weights = {k: v.clone() for k, v in weights.items()}
@@ -73,7 +72,6 @@ def generate_figure_4(maml_weights, joint_weights, fixed_weights):
     num_test_devices = 20 
     
     for P in p_values:
-        # THE FIX: MAML gets 1 step. Baselines get 100 steps to converge on the P pilots.
         avg_m = sum(evaluate_model(maml_weights, P, adapt_steps=1) for _ in range(num_test_devices)) / num_test_devices
         avg_j = sum(evaluate_model(joint_weights, P, adapt_steps=100) for _ in range(num_test_devices)) / num_test_devices
         avg_f = sum(evaluate_model(fixed_weights, P, adapt_steps=100) for _ in range(num_test_devices)) / num_test_devices
@@ -99,7 +97,6 @@ def generate_figure_4(maml_weights, joint_weights, fixed_weights):
 def generate_figure_5(maml_weights, lr=0.1):
     print("\nGenerating Figure 5 (Probability Distributions...)")
     
-    # THE FIX: The paper used h = -1.0 for this specific visualization!
     device_h = -1.0
     y_pilots, labels_pilots, _ = generate_device_data(6, h=device_h, is_pilot=True)
     
@@ -117,14 +114,12 @@ def generate_figure_5(maml_weights, lr=0.1):
 
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 8))
     
-    # Matching the exact colors of the paper
     colors = ['black', 'green', 'blue', 'purple']
     
     for i in range(4):
         ax1.plot(y_real.numpy(), probs_maml[:, i], color=colors[i])
         ax2.plot(y_real.numpy(), probs_adapt[:, i], color=colors[i])
 
-    # Placing labels to match the h = -1.0 flipped orientation
     ax1.text(-3.8, 0.45, 's = 3', color='purple', fontsize=12)
     ax1.text(-1.5, 0.45, 's = 1', color='blue', fontsize=12)
     ax1.text(0.5, 0.45, 's = -1', color='green', fontsize=12)

@@ -76,7 +76,6 @@ def generate_figure_6(maml_weights, joint_weights, fixed_weights):
     num_test_devices = 50 
     
     for P in p_values:
-        # THE FIX: Baselines are granted 500 steps to attempt to learn the complex channel. MAML needs 100.
         avg_maml = sum(evaluate_model(maml_weights, P, adapt_steps=100) for _ in range(num_test_devices)) / num_test_devices
         avg_joint = sum(evaluate_model(joint_weights, P, adapt_steps=500) for _ in range(num_test_devices)) / num_test_devices
         avg_fixed = sum(evaluate_model(fixed_weights, P, adapt_steps=500) for _ in range(num_test_devices)) / num_test_devices
@@ -103,7 +102,12 @@ def generate_figure_6(maml_weights, joint_weights, fixed_weights):
 # 5. THE TRAINING LOOP
 # ==========================================
 def run_realistic_scenario():
-    K = 20; N_tr = 16; N_te = 16; inner_lr = 0.01; meta_lr = 0.001; meta_epochs = 5000  
+    K = 20
+    N_tr = 16 
+    N_te = 16
+    inner_lr = 0.01
+    meta_lr = 0.001
+    meta_epochs = 5000  
     
     maml_weights = initialize_meta_weights()
     joint_weights = initialize_meta_weights()
