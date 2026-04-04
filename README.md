@@ -1,6 +1,6 @@
 # Learning to Demodulate from Few Pilots via Meta-Learning
 
-This repository contains a PyTorch reproduction and architectural enhancement of the IEEE research papers: **"Learning How to Demodulate from Few Pilots via Meta-Learning"** and **"Learning to Demodulate from Few Pilots via Offline and Online Meta-Learning"** by Sangwoo Park, Hyeryung Jang, Osvaldo Simeone, and Joonhyuk Kang. 
+This repository contains a PyTorch reproduction and architectural enhancement of the IEEE research papers: **"Learning How to Demodulate from Few Pilots via Meta-Learning"** by Sangwoo Park, Hyeryung Jang, Osvaldo Simeone, and Joonhyuk Kang. 
 
 ## 📌 Project Overview
 
@@ -31,7 +31,7 @@ Furthermore, this repository proposes **two major novelties** to improve upon th
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/YourUsername/demodulator-meta-learning.git](https://github.com/YourUsername/demodulator-meta-learning.git)
+   git clone https://github.com/ParthKhiriya/demodulator-meta-learning.git
    cd demodulator-meta-learning
    ```
 
@@ -81,21 +81,13 @@ The original MAML baseline feeds raw 2D Cartesian coordinates (Real, Imaginary) 
 
 **The Result:** When given the exact same computational budget as the baseline (100 adaptation steps), the proposed 4D ResNet dropped the Symbol Error Rate (SER) at P=16 from the baseline's 13.8% down to a highly accurate **10.5%**.
 
-![Figure Novelty Architecture](figures/Figure_Novelty_Architecture_Final.png)
+![Figure Novelty Architecture](figures/Figure_Novelty_Architecture.png)
 
 ### Novelty 2: Continuous Online Meta-Learning (High-Speed Adaptation)
 Instead of training on a fixed, offline dataset, a real-world cell tower experiences a continuous stream of connecting devices. We simulated a live timeline of 3,000 sequential devices, utilizing a historical Replay Buffer to update the global meta-brain in the background.
 
 **The Result:**
 In a real-time streaming environment, computational speed is critical. Traditional baselines (Joint Training and Fixed Initialization) were given 500 gradient steps to adapt, yet completely failed, stagnating at 40% to 60% error rates. The proposed Online MAML (4D ResNet) was severely restricted to only **3 adaptation steps**, yet successfully plummeted to a stable **~20%** error rate. This proves the proposed architecture can dynamically adapt to new IoT devices **over 160x faster** than traditional methods without sacrificing reliability.
-
-![Figure Novelty Online](figures/Figure_Novelty_Online.png)
-
-### Novelty 2: Continuous Online Meta-Learning
-Instead of training on a fixed, offline dataset, a real-world cell tower experiences a continuous stream of connecting devices. We simulated a live timeline of 3,000 sequential devices, utilizing a historical Replay Buffer to update the global meta-brain in the background.
-
-**The Result:**
-When evaluated under live conditions with only 3 adaptation steps, traditional Joint Training and Fixed Initialization completely failed, stagnating at 40% to 60% error rates. The proposed Online MAML (4D ResNet) successfully learned the underlying physics of the cell tower in real-time, plummeting to a stable **~20%** error rate on the fly.
 
 ![Figure Novelty Online](figures/Figure_Novelty_Online.png)
 
