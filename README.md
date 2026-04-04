@@ -9,7 +9,7 @@ In Internet-of-Things (IoT) networks, devices sporadically transmit short packet
 This project solves that problem by implementing **Model-Agnostic Meta-Learning (MAML)**. By using historical transmissions from *other* IoT devices as a meta-training dataset, the neural network learns a highly sensitive initialization state. When a new device connects, the network can adapt to its unique fading and distortion using as few as 1 to 16 pilots.
 
 Furthermore, this repository proposes **two major novelties** to improve upon the baseline papers' performance:
-1. **A Physics-Informed 4D ResNet** that reduces the error rate while adapting **33x faster**.
+1. **A Physics-Informed 4D ResNet** that reduces the error rate.
 2. **A Continuous Online Streaming** simulation that updates the global meta-brain in real-time without catastrophic forgetting.
 
 ---
